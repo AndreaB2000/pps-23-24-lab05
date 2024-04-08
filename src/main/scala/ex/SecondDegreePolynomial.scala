@@ -15,7 +15,7 @@ trait SecondDegreePolynomial:
 object SecondDegreePolynomial:
   def apply(secondDegree: Double, firstDegree: Double, constant: Double): SecondDegreePolynomial =
     new SecondDegreePolynomialImpl(secondDegree, firstDegree, constant)
-  private class SecondDegreePolynomialImpl(
+  private case class SecondDegreePolynomialImpl(
     override val secondDegree: Double,
     override val firstDegree: Double,
     override val constant: Double,
