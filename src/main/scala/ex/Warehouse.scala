@@ -51,7 +51,19 @@ trait Warehouse:
 end Warehouse
 
 object Warehouse:
-  def apply(): Warehouse = ???
+  def apply(): Warehouse = new WarehouseImpl
+  private case class WarehouseImpl() extends Warehouse:
+    private var items: Sequence[Item] = Sequence()
+    override def remove(item: Item): Unit =
+      items = items.filter(_ != item)
+    override def retrieve(code: Int): Optional[Item] =
+      items.filter(_.code == code).head
+    override def searchItems(tag: String): Sequence[Item] =
+      items.filter(_.name.contains(tag))
+    override def store(item: Item): Unit =
+      items.concat(Sequence(item))
+    override def contains(itemCode: Int): Boolean =
+      items.map(_.code).contains(itemCode)
 
 @main def mainWarehouse(): Unit =
   val warehouse = Warehouse()
